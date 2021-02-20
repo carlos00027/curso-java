@@ -8,7 +8,5 @@ public class Television {
         resolucion=20;
         sintonizador=false;
     }    
-    public Television(){
-
-    }
+    
 }
