@@ -3,34 +3,39 @@ package co.com.sanchezacero.ejercicio;
 import java.util.Arrays;
 
 public class Electrodomestico {
-    int precioBase;
-    String color;
-    char consumoEnergetico;
-    int peso;
-    String[] colores = {"blanco","negro","rojo","azul","gris"};
-    char[] consumos = {'a','b','c','d','e','f'};
+    protected final static char consumoEnergeticoDefault = 'f';
+    protected final static String colorDefault = "blanco";
+    protected final static int precioBaseDefault = 100;
+    protected final static int pesoDefault = 5;
+
+    protected int precioBase;
+    protected String color;
+    protected char consumoEnergetico;
+    protected int peso;
+    protected String[] colores = {"blanco","negro","rojo","azul","gris"};
+    protected char[] consumos = {'a','b','c','d','e','f'};
 
     public Electrodomestico(){
-        precioBase=100;    
-        color="blanco";
-        consumoEnergetico='f';
-        peso=5;
+        precioBase = precioBaseDefault;    
+        peso = pesoDefault;
+        color = colorDefault;
+        consumoEnergetico = consumoEnergeticoDefault;
     }
 
 
     public Electrodomestico(int precio,int peso){
         precioBase = precio;
         this.peso = peso;
-        
-        color="blanco";
-        consumoEnergetico='f';
+        this.color = colorDefault;
+        this.consumoEnergetico = consumoEnergeticoDefault;   
     }
 
-    public Electrodomestico(int precio,String color,char consumo,int peso){
-        precioBase=precio;    
-        this.color=color;
-        consumoEnergetico=consumo;
+    public Electrodomestico(int precio,int peso,char consumo,String color){
+        precioBase=precio;
         this.peso=peso;
+
+        comprobarConsumoEnergetico(consumo);
+        comprobarColor(color);
     }
 
     public int getPrecioBase(){
@@ -59,37 +64,49 @@ public class Electrodomestico {
                 break;
             }    
         }
-        System.out.println( "consumo "+existe);
+        //System.out.println( "consumo "+existe);
         if(!existe){
-            letra = 'f';
+            letra = consumoEnergeticoDefault;
         }
         consumoEnergetico = letra;
     }
+
     protected String comprobarColor(String color){
         String[] arrayColores = {"blanco","negro","rojo","azul","gris"};
         boolean existe = Arrays.asList(arrayColores).contains(color);
         if(!existe){
-            color = "blanco";
+            color = colorDefault;
         }
         return color;
     }
+    
     public int precioFinal(){
-        
+        int adicional = 0;
         if(consumoEnergetico == 'a'){
-            setPrecioBase(100);
+            adicional += 100;
         }else if(consumoEnergetico == 'b'){
-            setPrecioBase(80);
+            adicional += 80;
         }else if(consumoEnergetico == 'c'){
-            setPrecioBase(60);
+            adicional += 60;
         }else if(consumoEnergetico == 'd'){
-            setPrecioBase(50);
+            adicional += 50;
         }else if(consumoEnergetico == 'e'){
-            setPrecioBase(30);
+            adicional += 30;
         }else if(consumoEnergetico == 'f'){
-            setPrecioBase(10);
+            adicional += 10;
         }
 
-        return precioBase;
+        if(peso >= 0 && peso <=19){
+            adicional += 10;
+        }else if(peso >=20 && peso <= 49){
+            adicional += 50;
+        }else if(peso >= 50 && peso <= 79){
+            adicional += 80;
+        }else if(peso >= 80){
+            adicional += 100;
+        }
+
+        return precioBase + adicional;
     }
    
 }

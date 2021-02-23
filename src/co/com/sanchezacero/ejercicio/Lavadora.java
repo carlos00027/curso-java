@@ -1,26 +1,33 @@
 package co.com.sanchezacero.ejercicio;
 
 public class Lavadora extends Electrodomestico {
-    private final int carga;
+    private final static int cargaDefault = 5;
+
+    private int carga;
 
     public Lavadora(){
-        super();
-        carga = 5;
+        super(precioBaseDefault,pesoDefault,consumoEnergeticoDefault,colorDefault);
+        this.carga = cargaDefault;
     }
-    public Lavadora(int carga,int peso){
-        super();
-        this.carga = carga;
-        this.peso = peso;
+
+    public Lavadora(int precioBase,int peso){
+        super(precioBase,peso,consumoEnergeticoDefault,colorDefault);
+        this.carga = cargaDefault;
     }
-    public Lavadora(int carga, int precio,String color,char consumo,int peso){
-        super(precio, color, consumo, peso);
-        this.carga = carga;
-        
+    
+    public Lavadora(int precio, int peso, char consumo,String color, int carga){
+        super(precio,peso, consumo,color);
+        this.carga = carga;   
     }
+    
     public int getCarga() {
         return carga;
     }
     public int precioFinal() {
-        return carga;
+        int adicional= super.precioFinal();
+        if(carga >= 30){
+            adicional += 50;
+        }
+        return adicional;
     }
 }
